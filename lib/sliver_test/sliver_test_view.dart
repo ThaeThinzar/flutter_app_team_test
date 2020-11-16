@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_team_test/common/common_utils.dart';
 import 'package:flutter_app_team_test/sliver_test/sliver_app_bar_title_changer.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SliverTestView extends StatefulWidget{
   _SliverTestViewState createState() => _SliverTestViewState();
@@ -16,6 +17,13 @@ class _SliverTestViewState extends State<SliverTestView>{
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            leading:  IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.white,),
+
+              onPressed: (){
+                Fluttertoast.showToast(msg: "Back Button to exit from app");
+              },
+            ),
             pinned: true,// to stable app bar after collapsed
             centerTitle: false,// to place app bar title center
             title:SliverAppBarTitleChanger(child: Text("Asian Travel")),
