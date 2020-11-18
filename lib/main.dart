@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
+
 import 'package:flutter_app_team_test/sliver_test/sliver_test_view.dart';
+
+import 'package:flutter_app_team_test/common/common_widge.dart';
+import 'package:flutter_app_team_test/plat_form_channel/plat_form_channel.dart';
+
+import 'common/constants.dart';
+
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  final routes = <String,WidgetBuilder>{
+    ScreenURLPath.PLATFORM_CHANNEL:(context) => PlatformChannelView() ,
+  };
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,7 +26,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SliverTestView(),
+      routes: routes,
+      home: MyHomePage(title: 'Team OKR Test'),
+
     );
   }
 }
@@ -32,36 +44,46 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  String msg = "No message";
-  static const channel = const MethodChannel('flutter_app_team_test/mychannel');
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-  Future<Null> _openNewPage() async {
-    final response =
-    await channel.invokeMethod("openPage", ["Hello  From Flutter"]);
-    print('Response of openPage: $response');
-  }
-  Future<Null> _showDialog() async {
-    final response =
-    await channel.invokeMethod("showDialog", ["Called From Flutter"]);
-//    print(response);
-    final snackbar = new SnackBar(content: new Text(response));
-    Scaffold.of(context).showSnackBar(snackbar);
-  }
-  Future<void> getData()async{
-    String message;
-    try{
-      message = await channel.invokeMethod('getData');
-    }on PlatformException catch(e){
-      message = "Failed to load message from native";
-    }
-    setState(() {
-      msg = message;
-    });
+
+  Widget buttonWidget(String title, String screenName, BuildContext context){
+    return GestureDetector(
+      onTap: (){
+        CommonWidget.onPressedToNavigate(screenName,context);
+      },
+      child: Container(
+        margin: EdgeInsets.all(8),
+        width: double.infinity,
+        height: 40,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Colors.lightGreen,
+              Colors.green[200],
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black45,
+              offset: Offset(5, 5),
+              blurRadius: 10,
+            )
+          ],
+        ),
+        child: Center(
+          child: Text(
+            title,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ),
+    );
   }
   @override
   Widget build(BuildContext context) {
@@ -69,33 +91,16 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-
-        child: Column(
-
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              msg,
-            ),
-            RaisedButton(
-              child: Text("Call Native Function"),
-              onPressed: getData,
-            ),
-            SizedBox(height: 5,),
-            RaisedButton(onPressed: _openNewPage,
-            child: Text('Open New Page From Native'),),
-            SizedBox(height: 5,),
-            RaisedButton(onPressed: _showDialog,
-              child: Text('Open Dialog'),)
-          ],
-        ),
+      body: CustomScrollView(
+        slivers: [
+          SliverList(delegate: SliverChildListDelegate(
+            [
+              buttonWidget('Platform channel',ScreenURLPath.PLATFORM_CHANNEL,context),
+            ]
+          ))
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
