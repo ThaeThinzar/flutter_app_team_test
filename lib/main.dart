@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
@@ -6,6 +8,7 @@ import 'package:flutter_app_team_test/sliver_test/sliver_test_view.dart';
 
 import 'package:flutter_app_team_test/common/common_widge.dart';
 import 'package:flutter_app_team_test/plat_form_channel/plat_form_channel.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'common/constants.dart';
 
@@ -16,14 +19,16 @@ void main() {
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   final routes = <String,WidgetBuilder>{
-    ScreenURLPath.PLATFORM_CHANNEL:(context) => PlatformChannelView() ,
+    ScreenURLPath.PLATFORM_CHANNEL:(context) => PlatformChannelView(title: 'Platform Channel',) ,
+    ScreenURLPath.SLIVER_TEST:(context) => SliverTestView(),
   };
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Team Activity',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: routes,
@@ -48,6 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget buttonWidget(String title, String screenName, BuildContext context){
     return GestureDetector(
       onTap: (){
+        Fluttertoast.showToast(msg: 'click on');
         CommonWidget.onPressedToNavigate(screenName,context);
       },
       child: Container(
@@ -95,7 +101,10 @@ class _MyHomePageState extends State<MyHomePage> {
         slivers: [
           SliverList(delegate: SliverChildListDelegate(
             [
-              buttonWidget('Platform channel',ScreenURLPath.PLATFORM_CHANNEL,context),
+            //  buttonWidget('Platform channel',ScreenURLPath.PLATFORM_CHANNEL,context),
+            //  buttonWidget('Sliver Test', ScreenURLPath.SLIVER_TEST, context)
+              CommonWidget.buttonWidget(context, ScreenURLPath.PLATFORM_CHANNEL, 'Data Communication'),
+              CommonWidget.buttonWidget(context, ScreenURLPath.SLIVER_TEST, 'Sliver Test')
             ]
           ))
         ],

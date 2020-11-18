@@ -6,6 +6,9 @@ class CommonWidget {
       margin: EdgeInsets.only(left: 8, right: 8),
       width: MediaQuery.of(context).size.width,
       child: RaisedButton(
+        color: Colors.green,
+        focusColor: Colors.blueGrey,
+        textColor: Colors.white,
         onPressed: (){
           onPressedToNavigate(screenName, context);
         },
