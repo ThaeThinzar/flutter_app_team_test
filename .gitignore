@@ -83,3 +83,13 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+.packages
+.dart_tool/package_config.json
+.dart_tool/flutter_build/cbf8c2f3d196ec90d1f3f1f33be05731/.filecache
+.dart_tool/flutter_build/cbf8c2f3d196ec90d1f3f1f33be05731/app.dill
+.dart_tool/flutter_build/cbf8c2f3d196ec90d1f3f1f33be05731/debug_android_application.stamp
+.dart_tool/flutter_build/cbf8c2f3d196ec90d1f3f1f33be05731/flutter_assets.d
+.dart_tool/flutter_build/cbf8c2f3d196ec90d1f3f1f33be05731/gen_localizations.stamp
+.dart_tool/flutter_build/cbf8c2f3d196ec90d1f3f1f33be05731/kernel_snapshot.d
+.dart_tool/flutter_build/cbf8c2f3d196ec90d1f3f1f33be05731/kernel_snapshot.stamp
+.dart_tool/flutter_build/cbf8c2f3d196ec90d1f3f1f33be05731/outputs.json
