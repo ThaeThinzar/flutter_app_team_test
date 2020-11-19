@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
+import 'package:flutter_app_team_test/sliver_test/sliver_grid_view.dart';
 
 import 'package:flutter_app_team_test/sliver_test/sliver_test_view.dart';
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
   final routes = <String,WidgetBuilder>{
     ScreenURLPath.PLATFORM_CHANNEL:(context) => PlatformChannelView(title: 'Platform Channel',) ,
     ScreenURLPath.SLIVER_TEST:(context) => SliverTestView(),
+    ScreenURLPath.SLIVER_GRID_VIEW:(context) => SliverGridViewTest(),
   };
   @override
   Widget build(BuildContext context) {

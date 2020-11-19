@@ -2,6 +2,7 @@ class FamousCityData{
   String title;
   String imageUrl;
   String description;
-  FamousCityData({this.title, this.imageUrl, this.description});
+  String country;
+  FamousCityData({this.title, this.imageUrl, this.country,this.description});
 
 }
