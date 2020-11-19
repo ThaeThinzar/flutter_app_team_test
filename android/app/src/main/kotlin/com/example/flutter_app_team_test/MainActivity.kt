@@ -26,18 +26,13 @@ class MainActivity: FlutterActivity() ,MethodChannel.MethodCallHandler{
         startActivity(intent)
     }
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
-        val args = call.arguments as List<*>
-        val param = args.first() as String
-
         when(call.method) {
             "getData" -> {
                 val message = getData()
                 result.success(message)
 
             }
-            "openPage" -> {
-                openSecondActivity(param)
-            } else -> result.notImplemented()
+            else -> result.notImplemented()
         }
     }
 }
