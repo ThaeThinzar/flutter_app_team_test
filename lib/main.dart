@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
+import 'package:flutter_app_team_test/sliver_test/bottom_navigateion.dart';
 
 import 'package:flutter_app_team_test/sliver_test/sliver_test_view.dart';
 
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       title: 'Team Activity',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.brown,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: routes,
