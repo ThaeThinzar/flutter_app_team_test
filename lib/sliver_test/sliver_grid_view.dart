@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_app_team_test/common/FamousCityData.dart';
 import 'package:flutter_app_team_test/common/common_utils.dart';
 import 'package:flutter_app_team_test/sliver_test/sliver_app_bar_title_changer.dart';
 
@@ -8,6 +11,19 @@ class SliverGridViewTest extends StatefulWidget{
   _SliverGridViewTestState createState() => _SliverGridViewTestState();
 }
 class _SliverGridViewTestState extends State<SliverGridViewTest>{
+  List<FamousCityData> fcList = List();
+  final _random = new Random();
+  @override
+  void initState() {
+    super.initState();
+    getList();
+  }
+  getList(){
+    for(int i= 0; i<famousCityList.length;i++){
+      fcList.add(famousCityList[i]);
+    }
+
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -36,24 +52,34 @@ class _SliverGridViewTestState extends State<SliverGridViewTest>{
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             ///no.of items in the horizontal axis
             crossAxisCount: 3,
+              crossAxisSpacing: 5,
+              mainAxisSpacing: 5,
+
             ),
-           delegate: SliverChildListDelegate(
+
+          /* delegate: SliverChildListDelegate(
               [
                 for(int i = 0; i< famousCityList.length;i++)
 
-                  listItem(famousCityList[i].title, famousCityList[i].country, famousCityList[i].imageUrl),
+                  listItem(famousCityList[i]),
               ]
-           )
+           )*/
+
+           delegate: SliverChildBuilderDelegate(
+
+               (BuildContext context,int index){
+                return listItem(famousCityList[index]);
+               },
+               childCount: famousCityList.length,
+           ),
           ),
         ],
       )
     );
   }
-  Widget listItem(String title, String country, String imgurl){
-    String imageUrl = 'assets/images/'+ imgurl;
+  Widget listItem(FamousCityData data){
+    String imageUrl = 'assets/images/'+ data.imageUrl;
     return   Container(
-      height: 400,
-      width: 400,
       margin: EdgeInsets.all(8),
       child: Stack(
         children: [
@@ -77,8 +103,8 @@ class _SliverGridViewTestState extends State<SliverGridViewTest>{
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title,style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.amber)),
-                  Text(country,style: TextStyle(fontSize: 8, fontWeight: FontWeight.normal, color: Colors.white),)
+                  Text(data.title,style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.amber)),
+                  Text(data.country,style: TextStyle(fontSize: 8, fontWeight: FontWeight.normal, color: Colors.white),)
                 ],
               )
           )
@@ -86,5 +112,18 @@ class _SliverGridViewTestState extends State<SliverGridViewTest>{
       ),
     );
   }
-
+  Widget gridItem(FamousCityData data) => Container(
+    height: 100.0,
+    color: Colors.amber,
+    child: Center(
+      child: Text(
+        "${data.title}",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            color: Colors.white,
+            fontSize: 10.0,
+            fontWeight: FontWeight.bold,),
+      ),
+    ),
+  );
 }
