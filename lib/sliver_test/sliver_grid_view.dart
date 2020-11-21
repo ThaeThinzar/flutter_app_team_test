@@ -57,7 +57,7 @@ class _SliverGridViewTestState extends State<SliverGridViewTest>{
 
             ),
 
-          /* delegate: SliverChildListDelegate(
+          /* delegate: SliverChildListDelegate(//TODO sliverchildListdelegate
               [
                 for(int i = 0; i< famousCityList.length;i++)
 
