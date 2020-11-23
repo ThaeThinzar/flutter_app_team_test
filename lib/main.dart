@@ -1,8 +1,8 @@
 
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
+import 'package:flutter_app_team_test/media_query_safe_area/media_query_safe_area.dart';
 
 import 'package:flutter_app_team_test/sliver_test/sliver_test_view.dart';
 
@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
   final routes = <String,WidgetBuilder>{
     ScreenURLPath.PLATFORM_CHANNEL:(context) => PlatformChannelView(title: 'Platform Channel',) ,
     ScreenURLPath.SLIVER_TEST:(context) => SliverTestView(),
+    ScreenURLPath.MEDIA_SAFE:(context) => TestMediaSafeArea(),
   };
   @override
   Widget build(BuildContext context) {
@@ -104,7 +105,8 @@ class _MyHomePageState extends State<MyHomePage> {
             //  buttonWidget('Platform channel',ScreenURLPath.PLATFORM_CHANNEL,context),
             //  buttonWidget('Sliver Test', ScreenURLPath.SLIVER_TEST, context)
               CommonWidget.buttonWidget(context, ScreenURLPath.PLATFORM_CHANNEL, 'Data Communication'),
-              CommonWidget.buttonWidget(context, ScreenURLPath.SLIVER_TEST, 'Sliver Test')
+              CommonWidget.buttonWidget(context, ScreenURLPath.SLIVER_TEST, 'Sliver Test'),
+              CommonWidget.buttonWidget(context, ScreenURLPath.MEDIA_SAFE, 'Media Safe Test')
             ]
           ))
         ],
