@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
+import 'package:flutter_app_team_test/deeplink/DeepLinkBLOC.dart';
+import 'package:flutter_app_team_test/deeplink/deep_link_screen.dart';
 
 import 'package:flutter_app_team_test/sliver_test/sliver_test_view.dart';
 
@@ -10,6 +12,7 @@ import 'package:flutter_app_team_test/common/common_widge.dart';
 import 'package:flutter_app_team_test/plat_form_channel/plat_form_channel.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import 'package:provider/provider.dart';
 import 'common/constants.dart';
 
 void main() {
@@ -24,6 +27,7 @@ class MyApp extends StatelessWidget {
   };
   @override
   Widget build(BuildContext context) {
+    DeepLinkBloc _bloc = DeepLinkBloc();
     return MaterialApp(
       title: 'Team Activity',
       debugShowCheckedModeBanner: false,
@@ -32,9 +36,15 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: routes,
-      home: MyHomePage(title: 'Team OKR Test'),
+      home: Scaffold(
+        body: Provider<DeepLinkBloc>(
+            create: (context) => _bloc,
+            dispose: (context, bloc) => bloc.dispose(),
+            child: PocWidget())));
 
-    );
+      //MyHomePage(title: 'Team OKR Test'),
+
+   // );
   }
 }
 
