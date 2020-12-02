@@ -48,7 +48,7 @@ class _SliverGridViewTestState extends State<SliverGridViewTest>{
               background: Container(color: Colors.brown,)
             ),
           ),
-          SliverGrid(
+         /* SliverGrid(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             ///no.of items in the horizontal axis
             crossAxisCount: 3,
@@ -57,13 +57,13 @@ class _SliverGridViewTestState extends State<SliverGridViewTest>{
 
             ),
 
-          /* delegate: SliverChildListDelegate(//TODO sliverchildListdelegate
+          *//* delegate: SliverChildListDelegate(//TODO sliverchildListdelegate
               [
                 for(int i = 0; i< famousCityList.length;i++)
 
                   listItem(famousCityList[i]),
               ]
-           )*/
+           )*//*
 
            delegate: SliverChildBuilderDelegate(
 
@@ -72,14 +72,29 @@ class _SliverGridViewTestState extends State<SliverGridViewTest>{
                },
                childCount: famousCityList.length,
            ),
-          ),
+          ),*/
+          SliverGrid.extent(
+          maxCrossAxisExtent: 200,
+    mainAxisSpacing: 5.0,
+    crossAxisSpacing: 5.0,
+    childAspectRatio: 3.0,
+    children: [
+    for(int i = 0; i< famousCityList.length;i++)
+    listItem(famousCityList[i]),
+    ],
+
+    ),
         ],
       )
     );
   }
+  Widget containerList(){
+    return Container(height: 500,width:300,color: Colors.red,);
+  }
   Widget listItem(FamousCityData data){
     String imageUrl = 'assets/images/'+ data.imageUrl;
     return   Container(
+      height: 400,
       margin: EdgeInsets.all(8),
       child: Stack(
         children: [
