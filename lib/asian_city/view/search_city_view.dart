@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_team_test/asian_city/bloc/bloc.dart';
 import 'package:flutter_app_team_test/asian_city/model/get_city_res.dart';
+import 'package:flutter_app_team_test/common/FamousCityData.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchCityView extends StatefulWidget{
@@ -9,32 +10,44 @@ class SearchCityView extends StatefulWidget{
 }
 class _SearchCityViewState extends State<SearchCityView>{
   final cityNameController = TextEditingController();
-  City selectedCity;
+  FamousCityData selectedCity;
+  CityBloc _cityBloc;
   bool isShow;
+  bool isNoData;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     isShow = false;
+    isNoData = false;
+    _cityBloc = CityBloc();
+    _cityBloc.add(GetCityList());
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xff00001f),
       body: BlocListener<CityBloc,CityState>(
-        cubit: CityBloc(),
+        cubit: _cityBloc,
         listener: (context,state){
           if(state is CityEventSuccess){
             if(state.searchedCity != null){
+              FocusScope.of(context).requestFocus(new FocusNode());
               setState(() {
                 selectedCity = state.searchedCity;
                 isShow = true;
+                isNoData = false;
               });
+            } else {
+              FocusScope.of(context).requestFocus(new FocusNode());
+              isNoData = true;
+              isShow = false;
             }
           }
         },
         child: BlocBuilder<CityBloc,CityState>(
-          cubit: CityBloc(),
+          cubit: _cityBloc,
           builder: (context,state){
             if(state is CityEventLoading){
               return Center(child: CircularProgressIndicator(),);
@@ -80,7 +93,7 @@ class _SearchCityViewState extends State<SearchCityView>{
                         RaisedButton(
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                           onPressed: () {
-                            CityBloc().add(SearchCityEvent(cityName: cityNameController.text.toString()));
+                            _cityBloc.add(SearchCityEvent(cityName: cityNameController.text.toString()));
                           },
                           child: Text("Search"),
                         ),
@@ -94,7 +107,7 @@ class _SearchCityViewState extends State<SearchCityView>{
                               bottomRight:  Radius.circular(8.0),
                             ),
                             child: Image.asset(
-                                'assets/images/bagan.jpg',
+                                'assets/images/${selectedCity.imageUrl}',
                                 width: MediaQuery.of(context).size.width/2,
                                 height: 150,
                                 fit:BoxFit.fill
@@ -108,25 +121,16 @@ class _SearchCityViewState extends State<SearchCityView>{
                             children: [
                               Container(
                                 margin: EdgeInsets.all(8),
-                                child: Text('Country ➤  Myanmar ',
+                                child: Text('${selectedCity.description} ',
                                   style: TextStyle(color: Colors.white, fontSize: 18),),
                               ),
-                              Container(
-                                margin: EdgeInsets.all(8),
-                                child: Text('Region   ➤  Manadaly ',
-                                  style: TextStyle(color: Colors.white, fontSize: 18),),
-                              ),
-
-                              Container(
-                                margin: EdgeInsets.all(8),
-                                child: Text('Famous ➤  Myanmar ',
-                                  style: TextStyle(color: Colors.white, fontSize: 18),),
-                              ),
-
-
                             ],
                           ) ,
-                        ) :Container()
+                        ) :Container(),
+                        isNoData ? Container(
+                          margin: EdgeInsets.only(top: 50),
+                          child: Text('There is no result found',style: TextStyle(fontSize:20,color: Colors.white),),
+                        ): Container()
                       ],
                     ),
                   )
